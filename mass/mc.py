@@ -2,7 +2,6 @@ import numpy as np
 import pandas as pd
 from scipy.spatial.distance import *
 from .liftTesc import LiftTesc
-import skmultilearn
 from scipy import sparse
 from sklearn.metrics.pairwise import euclidean_distances
 
