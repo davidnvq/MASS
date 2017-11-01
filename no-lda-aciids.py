@@ -1,5 +1,6 @@
 import numpy as np 
 import pandas as pd
+from mass.mc import MassClassifier
 
 from scipy import sparse
 from eval import Evaluation
