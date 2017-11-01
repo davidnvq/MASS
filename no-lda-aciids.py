@@ -7,8 +7,8 @@ from eval import Evaluation
 
 mass_config = [{"name": "MASS", "classifier" : MassClassifier}]
 
-classifier_config = [{"name":"CC - SVM", "classifier" : 'class CC_SVM vào chỗ này'}, 
-               {"name":"BR - SVM", "classifier" : 'class_SVM_vao_cho_nay'}
+classifier_config = [{"name":"CC - SVM", "classifier" : ''}, 
+               {"name":"BR - SVM", "classifier" : ''}
 ]
 
 unlabel_config = [0, 100, 200, 300]
