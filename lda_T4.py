@@ -99,7 +99,7 @@ def run_mass_for_all_lda_cases():
     Test_Labels = pd.read_csv("data/D4i/test_labels.txt", header=None, sep=",", dtype= np.float32)
 
     writer = pd.ExcelWriter("./output/LDA-T4-result.xlsx")
-    lda_names = ["LDA_5"]#, "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
+    lda_names = ["LDA_5", "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
     # Read LDA_Features (Train, Test) From LDA_Res/LDA_5/D4a_text_data/dtopicdist
 
     for lda_case in lda_names:
