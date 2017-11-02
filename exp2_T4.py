@@ -1,3 +1,9 @@
+"""
+Run MASS on T4 with the support of knowledge from T1
+T1 = data 26800 
+T4 = our data
+"""
+
 import numpy as np 
 import pandas as pd
 from mass.mc import MassClassifier
@@ -7,11 +13,6 @@ from eval import Evaluation
 
 
 mass_config = [{"name": "MASS", "classifier" : MassClassifier}]
-
-
-unlabel_config = [0, 100, 200, 300]
-label_train_config = [500, 750, 1000]
-label_test_config = [250]
 
 T4_name = ['a', 'b', 'c', 'd', 'e', 'f']
 T4_size = [100, 200, 400, 600, 1000, 1200]
@@ -98,15 +99,16 @@ def run_mass_for_all_lda_cases():
     Test_Features = pd.read_csv("data/D4i/test_features.txt", header=None, sep=",", dtype=np.float32)
     Test_Labels = pd.read_csv("data/D4i/test_labels.txt", header=None, sep=",", dtype= np.float32)
 
-    writer = pd.ExcelWriter("./output/LDA-T4-result.xlsx")
-    lda_names = ["LDA_5", "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
+    #LDA Here mean AMC
+    writer = pd.ExcelWriter("./output/AMC-5topics-result.xlsx")
+    lda_names = ["AMC_5"]#, "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
     # Read LDA_Features (Train, Test) From LDA_Res/LDA_5/D4a_text_data/dtopicdist
-
+    
     for lda_case in lda_names:
         LDA_Features_T4 = []
         for i in range(len(T4_size)):
-            path = "data/LDA_Res/" + lda_case + "/D4" + T4_name[i] + "_text_data/D4" + T4_name[i] + "_text_data.dtopicdist"
-            
+            path = "data/Exp2_Res/D4" + T4_name[i] + "_text_data/D4" + T4_name[i] + "_text_data.dtopicdist"
+            print(path)
             lda_features = pd.read_csv(path, header=None, sep=" ", dtype=np.float32)
             LDA_Features_T4.append(lda_features)
 
@@ -114,7 +116,8 @@ def run_mass_for_all_lda_cases():
 
         print(report)
         report.to_excel(writer, lda_case)
-        
+    
+
     writer.save()
     
     return
