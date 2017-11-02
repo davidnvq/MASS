@@ -124,4 +124,4 @@ def run_mass_for_all_lda_cases():
 
 if __name__ == "__main__":
     print("Run")
-    #run_mass_for_all_lda_cases()
+    run_mass_for_all_lda_cases()
