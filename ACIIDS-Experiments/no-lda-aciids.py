@@ -1,9 +1,24 @@
 import numpy as np 
 import pandas as pd
+from mass.mc import MassClassifier
 
 from scipy import sparse
-from config import *
-from eval import Evaluation
+from mass.evaluation import Evaluation
+
+
+mass_config = [{"name": "MASS", "classifier" : MassClassifier}]
+
+classifier_config = [{"name":"CC - SVM", "classifier" : ''}, 
+               {"name":"BR - SVM", "classifier" : ''}
+]
+
+unlabel_config = [0, 100, 200, 300]
+label_train_config = [500, 750, 1000]
+label_test_config = [250]
+
+
+
+
 
 class Classifier(object):
     
@@ -95,17 +110,17 @@ def run_mass_for_every_test_of_lda_case(Features, Labels, lda_case):
     return report    
 
 def run_mass_for_all_lda_cases(Features, Labels):
-    # Edit file LDA1493-result.xlsx khi thay bang tap 26800.
-    writer = pd.ExcelWriter("./output/LDA1493-result.xlsx")
-    lda_names = ["LDA5", "LDA10", "LDA15", "LDA25", "LDA50", "LDA100"]
 
+    writer = pd.ExcelWriter("./output/NoLDA-result.xlsx")
+    lda_names = ["No-LDA"]#, "LDA10", "LDA15", "LDA25", "LDA50", "LDA100"]
+    print("Features", Features.shape)
+    print("Labels", Labels.shape)
     for lda_case in lda_names:
-        LDA_Features = pd.read_csv("data/LDA1493/" + lda_case + "/model-final.theta", header=None, sep= " ", dtype=np.float32)
-        newFeatures = pd.concat([Features, LDA_Features.iloc[:, : LDA_Features.shape[1]-1]], axis=1)
-        newFeatures = newFeatures.fillna(0)
+        newFeatures = Features.fillna(0)
         newFeatures = pd.concat([newFeatures, newFeatures.iloc[0:10, : ]], axis = 0)
         newLabels = pd.concat([Labels, Labels.iloc[0:10, : ]], axis = 0)
         report = run_mass_for_every_test_of_lda_case(newFeatures, newLabels, lda_case)
+        print(report)
         report.to_excel(writer, lda_case)
     writer.save()
 

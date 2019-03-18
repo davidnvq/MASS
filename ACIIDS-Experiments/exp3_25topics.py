@@ -9,7 +9,7 @@ import pandas as pd
 from mass.mc import MassClassifier
 
 from scipy import sparse
-from eval import Evaluation
+from mass.evaluation import Evaluation
 
 
 mass_config = [{"name": "MASS", "classifier" : MassClassifier}]
@@ -100,14 +100,18 @@ def run_mass_for_all_lda_cases():
     Test_Labels = pd.read_csv("data/D4i/test_labels.txt", header=None, sep=",", dtype= np.float32)
 
     #LDA Here mean AMC
-    writer = pd.ExcelWriter("./output/AMC-5topics-result.xlsx")
-    lda_names = ["AMC_5"]#, "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
+    #Change here
+    writer = pd.ExcelWriter("./output/Exp3-25topics-result.xlsx")
+    
+    #Change here
+    lda_names = ["AMC_25"]#, "LDA_10", "LDA_15", "LDA_25", "LDA_50"]
     # Read LDA_Features (Train, Test) From LDA_Res/LDA_5/D4a_text_data/dtopicdist
     
     for lda_case in lda_names:
         LDA_Features_T4 = []
         for i in range(len(T4_size)):
-            path = "data/Exp2_Res/D4" + T4_name[i] + "_text_data/D4" + T4_name[i] + "_text_data.dtopicdist"
+            #Change here
+            path = "data/Exp3_Res/T123_25topics/D4" + T4_name[i] + "_text_data/D4" + T4_name[i] + "_text_data.dtopicdist"
             print(path)
             lda_features = pd.read_csv(path, header=None, sep=" ", dtype=np.float32)
             LDA_Features_T4.append(lda_features)

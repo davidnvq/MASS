@@ -9,7 +9,7 @@ import pandas as pd
 from mass.mc import MassClassifier
 
 from scipy import sparse
-from eval import Evaluation
+from mass.evaluation import Evaluation
 
 
 mass_config = [{"name": "MASS", "classifier" : MassClassifier}]

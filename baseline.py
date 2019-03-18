@@ -1,11 +1,10 @@
 import numpy as np 
 import pandas as pd
-import matplotlib.pyplot as plt
- 
+
 from scipy import sparse
 from sklearn.model_selection import KFold
 from config import *
-from eval import Evaluation
+from mass.evaluation import Evaluation
 
 class Classifier(object):
     

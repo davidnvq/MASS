@@ -4,10 +4,8 @@ from scipy import sparse
 
 from sklearn.model_selection import KFold
 from utils.config import *
-from eval import Evaluation
-from sklearn.model_selection import train_test_split
+from mass.evaluation import Evaluation
 
-import matplotlib.pyplot as plt
 
 class Classifier(object):
     
