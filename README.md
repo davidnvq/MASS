@@ -1,11 +1,11 @@
 # MASS Implementation
 The implementatin for paper "A Semi-supervised Multi-label Classification Algorithm with Specific Features".
 
-## How to run the code
 
-### Train and make prediction from MassClassifier
+## Train and make prediction from MassClassifier in 30 seconds
 The `MassClassifier` has several methods which are similar to general models in `sklearn`.
 
+**30 seconds of code** 
 ```python
 from mass import MassClassifier
 
@@ -19,7 +19,83 @@ classifier.fit(X_train, Y_train, X_unlabel)
 classifier.predict(X_test)
 ```
 
-### Build the wrapper Classifier
+## A.1 How to call MassClassifier from command line
+The following command is used to run the toolkit, the system needs python version
+3.0 or newer:
+
+```bash
+python massclassifier.py <resources_dir> <input_file_dir> <output_file_dir> <options>
+```
+
+The arguments can be described as follows:
+* `<resources_dir>` is the directory containing a learned model (The default model is
+for multi-label classification for Vietnamese hotel).
+* `<input_file_dir>` is the directory containing the input file. In the input file, each
+line represents for the list of features of an instance.
+* `<output_file_dir>` is the directory containing the output file. Each line contains a
+label indicator of binary value {0, 1}.
+* `<options>` the type of label space division technique “random” for random
+approach, and “dd” for data driven approach.
+
+## A.2 How to use APIs
+
+###1. Initialize a classifier
+
+Firstly, we have to create a classifier:
+```python
+mClassifier = MassClassifier(learned_model_path, lspace_type="random",
+                             required_dense=True)
+```
+
+* `learned_model_path`: if we want to use our trained model, we have to pass a path
+of the learned model for the argument “learned_model_path. Otherwise, we will skip
+this argument and the default value for this: learned_model_path = None.
+* `lspace_type`: This argument defines the strategy this classifier will adopt to train a
+model. “random” for random approach, and “dd” for data driven approach.
+* `required_dense`: The representation of features would be dense matrix (True) or
+sparse matrix (False).
+
+### 2. Train a new model
+After initializing a classifier, we can use the following method to train a new model from
+our data:
+
+```python
+mClassifier.fit(X_train, Y_train, X_unlabel)
+```
+
+* `X_train`: A matrix of features representing for a set of labeled instances <`n1_samples` x `n_features`>
+* `Y_train`: A matrix of labels corresponding to each of `X_train` of <`n1_samples` x `n_labels`>
+* `X_unlabel`: A matrix of features representing for a set of unlabeled instances.
+<`n2_samples` x `n_features`>
+
+>> `X_train`, `Y_train`, `X_unlabel` can be represented by dense matrices or sparse matrices.
+The classifier will ultimately transform dense matrices to sparse matrices.
+
+Then the learned model will be exported into a file at the directory declared at the former
+step.
+
+### 3. Predict a set of labels for unseen instances
+```python
+Y_pred = mClassifier.predict(X_test)
+```
+
+* `X_test`: A feature matrix of instances we need to predicts their labels.
+* This method will return a predicted matrix of labels for `X_test`, here we store it to
+the variable `Y_pred`.
+
+### 4. Evaluate the performance of a trained model. 
+```python
+result = Evaluation.eval(Y_test, Y_pred)
+print(result)
+
+```
+* `Y_test` here is a label matrix of instances for testing or their truly observed labels.
+* `Y_pred`, as predicted in step 3, are a matrix of predicted labels for testing instances.
+
+The result should display the value as `Precision` = `a%`, `Recall` = `b%` and `F1-score` = `c%`.
+
+
+## B. Build the wrapper Classifier
 The operations on sparse matrices lead to better speed. Please edit the file `config.py` to build a wrapper.
 
 ```python
@@ -60,7 +136,7 @@ class Classifier(object):
 
 ```
 
-## Concreate Examples
+## C. Concreate Examples
 ```python
     """
     If we use BN_Features.txt -> BN-outer-Test-eval.txt
